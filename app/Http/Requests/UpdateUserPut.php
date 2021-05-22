@@ -23,7 +23,8 @@ class UpdateUserPut extends FormRequest
      */
     public function rules()
     {
-        return ([
+        return (
+        [
             'name' =>'required|string|min:2|max:255',
             'surname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,'.$this->route('user')->id,

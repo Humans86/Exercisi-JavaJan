@@ -96,7 +96,7 @@ class UserController extends Controller
 
             ]
         );
-       return back()->with('status','Usuari modificat correctament');
+       return back()->with('status','Usuari modificat correctament!');
     }
 
     /**
@@ -108,6 +108,6 @@ class UserController extends Controller
     public function destroy(User $user)
     {
        $user->delete();
-       return back()->with('status','Usuari esborrat correctament');
+       return back()->with('status','Usuari esborrat correctament!');
     }
 }

@@ -9,5 +9,4 @@
     @csrf
     @include('dashboard.user._form',['pasw'=>false])
 </form>
-
 @endsection

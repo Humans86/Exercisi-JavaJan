@@ -37,8 +37,6 @@
     <small class="text-danger">{{$message}}</small>
   @enderror
     @endif
-
-    
       
     <input type="submit" value="Enviar">
 

@@ -65,7 +65,6 @@
 
                 <button data-toggle="modal" data-target="#deleteModal" data-id="{{ $user->id }}"
                     class="btn btn-danger">Delete</button>
-
             </td>
         </tr>
         @endforeach
@@ -83,7 +82,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Segur que vols eliminar el registre seleccionat?</p>
+                <p>Segur que vols eliminar l usuari seleccionat?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -116,7 +115,7 @@
   $('#formDelete').attr('action',action)
 
   var modal = $(this)
-  modal.find('.modal-title').text('Esborraràs el titol : ' + id)
+  modal.find('.modal-title').text('Esborraràs usuari : ' + id)
 })
 </script>
 
