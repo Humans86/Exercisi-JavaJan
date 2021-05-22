@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\dashboard;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserPost;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -12,9 +15,15 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function __construct()
+     {
+        $this->middleware(['auth','rol.admin']);
+     }
     public function index()
     {
-        //
+        $users = User::orderBy('created_at','desc')->get();
+        return view('dashboard.user.index',['users' => $users]);
     }
 
     /**
@@ -24,7 +33,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+       return view('dashboard.user.create',['user'=>new user()]);
     }
 
     /**
@@ -33,9 +42,18 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserPost $request)
     {
-        //
+        User::create(
+            [
+            'name' => $request['name'],
+            'rol_id' => 2,
+            'surname' => $request['surname'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+            ]
+            );
+            return back()->with('status','Usuari creat correctament');
     }
 
     /**
@@ -44,9 +62,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return view('dashboard.user.show',["user"=>$user]);
     }
 
     /**
@@ -55,9 +73,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view('dashboard.user.edit',["user"=>$user]);
     }
 
     /**
@@ -67,9 +85,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreUserPost $request, User $user)
     {
-        //
+        $user->update(
+            [
+                'name' => $request['name'],
+                'surname' =>$request['surname'],
+                'email' => $request['email'],
+
+            ]
+        );
+       return back()->with('status','Usuari modificat correctament');
     }
 
     /**
@@ -78,8 +104,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+       $user->delete();
+       return back()->with('status','Usuari esborrat correctament');
     }
 }

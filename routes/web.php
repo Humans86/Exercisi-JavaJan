@@ -24,6 +24,7 @@ Route::post('dashboard/list/{list}/image', '\App\Http\Controllers\dashboard\List
 
 
 Route::resource('dashboard/category', '\App\Http\Controllers\dashboard\CategoryController');
+Route::resource('dashboard/user', '\App\Http\Controllers\dashboard\UserController');
 
 
 
