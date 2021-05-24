@@ -19,6 +19,9 @@
                 Cognom
             </td>
             <td>
+                Surname
+            </td>
+            <td>
                 Email
             </td>
             <td>
@@ -46,6 +49,9 @@
             </td>
             <td>
                 {{ $user->surname }}
+            </td>
+            <td>
+                {{ $user->username }}
             </td>
             <td>
                 {{ $user->email }}
