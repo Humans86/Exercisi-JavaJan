@@ -31,3 +31,8 @@ Route::resource('dashboard/user', '\App\Http\Controllers\dashboard\UserControlle
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//User Information
+Route::get('page/user/profile/', [App\Http\Controllers\HomeController::class, 'userProfile'])->name('user_profile');
+
+

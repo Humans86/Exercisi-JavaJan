@@ -110,4 +110,5 @@ class UserController extends Controller
        $user->delete();
        return back()->with('status','Usuari esborrat correctament!');
     }
+
 }
