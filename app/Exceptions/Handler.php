@@ -2,8 +2,10 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -37,5 +39,30 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        // dd($exception);
+
+        //dd($request->path());
+
+      //dd(Str::contains($request->path(),'api/'));
+
+      
+
+        if (env('APP_ENV') == 'local' || Str::contains($request->path(),'api/') )  {
+            return parent::render($request, $exception);
+        }
+
+        if ($exception instanceof NotFoundHttpException) {
+            return $this->errorResponse("Pàgina no trobada", $code = 404, $msj = 'Pàgina no trobada');
+        }
+
+        if ($exception instanceof ModelNotFoundException) {
+            return $this->errorResponse("Recurs no trobat", $code = 404, $msj = 'Recurs no trobat');
+        }
+
+        return parent::render($request, $exception);
     }
 }

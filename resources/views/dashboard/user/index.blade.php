@@ -19,7 +19,7 @@
                 Cognom
             </td>
             <td>
-                Surname
+                Username
             </td>
             <td>
                 Email

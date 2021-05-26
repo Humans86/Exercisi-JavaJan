@@ -50,6 +50,7 @@ class UserController extends Controller
             'name' => $request['name'],
             'rol_id' => 2,
             'surname' => $request['surname'],
+            'username' =>$request['username'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
             ]
@@ -92,8 +93,8 @@ class UserController extends Controller
             [
                 'name' => $request['name'],
                 'surname' =>$request['surname'],
+                'username' =>$request['username'],
                 'email' => $request['email'],
-
             ]
         );
        return back()->with('status','Usuari modificat correctament!');

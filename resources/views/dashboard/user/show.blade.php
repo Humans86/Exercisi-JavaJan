@@ -14,6 +14,10 @@
                  <input readonly class="form-control" type="text" name="surname" id="surname" value="{{ $user->surname}}">
      
         </div>
-        
+        <div class="form-group">
+                <label for="username"> Username </label>
+                 <input readonly class="form-control" type="text" name="username" id="username" value="{{ $user->username}}">
+     
+        </div>
      
 @endsection

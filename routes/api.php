@@ -18,4 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('list','\App\Http\Controllers\api\ListController');
+Route::resource('list','\App\Http\Controllers\api\ListController')->only(['index','show']);
+
+Route::get('list/{category}/category','\App\Http\Controllers\api\ListController@category');
+Route::get('list/{url}/url','\App\Http\Controllers\api\ListController@url');
+
+
+Route::get('category','\App\Http\Controllers\api\CategoryController@index');
+Route::get('category/all','\App\Http\Controllers\api\CategoryController@all');
