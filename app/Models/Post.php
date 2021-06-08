@@ -18,4 +18,7 @@ class Post extends Model
     public function image(){
         return $this->hasOne(PostImage::class);
     }
+    public function images(){
+        return $this->hasMany(PostImage::class);
+    }
 }

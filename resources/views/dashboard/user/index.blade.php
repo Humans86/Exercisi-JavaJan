@@ -91,7 +91,7 @@
                 <p>Segur que vols eliminar l usuari seleccionat?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
                 <form id="formDelete" method="POST" action="{{ route('user.destroy',0) }}"
                     data-action="{{ route('user.destroy',0) }}">
@@ -107,22 +107,26 @@
 </div>
 
 <script>
+    window.onload = function () {
     $('#deleteModal').on('show.bs.modal', function (event) {
-        
-  var button = $(event.relatedTarget) // Button that triggered the modal
-  var id = button.data('id') // Extract info from data-* attributes
-  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        //console.log ("modal obert") //Manera per la qual tenim per imprimir qualsevol tipus de text
 
-  action = $('#formDelete').attr('data-action').slice(0,-1)
-  action += id
-  console.log(action)
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var id = button.data('id') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
 
-  $('#formDelete').attr('action',action)
+       action = $('#formDelete').attr('data-action').slice(0,-1) 
+       action += id
+       console.log(action)
 
-  var modal = $(this)
-  modal.find('.modal-title').text('Esborraràs usuari : ' + id)
-})
-</script>
+       $('#formDelete').attr('action',action)
+
+        var modal = $(this)
+        modal.find('.modal-title').text('Eliminaràs usuari : ' + id)
+      })
+    }
+  </script>
+
 
 @endsection

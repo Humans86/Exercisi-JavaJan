@@ -67,10 +67,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Vols esborrar la categoria?</p>
+                <p>Segur que vols esborrar el registre?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
                 <form id="formDelete" method="POST" action="{{ route('category.destroy',0) }}"
                     data-action="{{ route('category.destroy',0) }}">
@@ -78,30 +78,30 @@
                     @csrf
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
-
-
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    $('#deleteModal').on('show.bs.modal', function (event) {
-        
-  var button = $(event.relatedTarget) // Button that triggered the modal
-  var id = button.data('id') // Extract info from data-* attributes
-  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    window.onload = function () {
+        $('#deleteModal').on('show.bs.modal', function (event) {
+                    
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('id') // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
 
-  action = $('#formDelete').attr('data-action').slice(0,-1)
-  action += id
-  console.log(action)
+            action = $('#formDelete').attr('data-action').slice(0,-1)
+            action += id
+            console.log(action)
 
-  $('#formDelete').attr('action',action)
+            $('#formDelete').attr('action',action)
 
-  var modal = $(this)
-  modal.find('.modal-title').text('Esborraràs la categoria ' + id)
-})
+            var modal = $(this)
+            modal.find('.modal-title').text('Esborraràs la categoria: ' + id)
+        })
+    }
 </script>
 
 @endsection

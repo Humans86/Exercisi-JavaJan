@@ -20,41 +20,15 @@ class ListController extends ApiResponseController
         join('post_images','post_images.post_id','=','posts.id')->
         join('categories','categories.id','=','posts.category_id')->
         select ('posts.*','categories.title as category','post_images.image')->
-        orderBy('posts.created_at','desc')->paginate(3);
+        orderBy('posts.created_at','desc')->paginate(5);
         
         return response()->json($lists,200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Post $list)
     {
         $list->image;
+        $list->images;
         $list->category;
         return $this->successResponse($list);
 
@@ -72,7 +46,15 @@ class ListController extends ApiResponseController
 
     public function category (Category $category)
     {
-        return $this->successResponse(["posts"=>$category->post()->paginate(2),"category" => $category]);
+        $lists = Post::
+        join('post_images', 'post_images.post_id', '=', 'posts.id')->
+        join('categories', 'categories.id', '=', 'posts.category_id')->
+        select('posts.*', 'categories.title as category', 'post_images.image')->
+        orderBy('posts.created_at', 'desc')->
+        where('categories.id', $category->id)->paginate(5);
+
+        return $this->successResponse(["posts" => $lists, "category" => $category]);
+
         
     }
 }

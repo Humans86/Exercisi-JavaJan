@@ -6,8 +6,10 @@ use App\Models\Post;
 use App\Models\Category;
 use App\Models\PostImage;
 use Illuminate\Http\Request;
+use App\Jobs\ProcessImageSmall;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreListPost;
+use Illuminate\Support\Facades\Storage;
 
 class ListController extends Controller
 {
@@ -64,7 +66,7 @@ class ListController extends Controller
     public function show(Post $list)
     {
     $categories = Category::pluck('id','title');
-    return view ('dashboard.list.show',["list"=>$list,'categories'=> $categories]);   
+    return view ('dashboard.list.show',["list"=>$list,'categories'=> $categories]);  
     }
 
     /**
@@ -107,24 +109,52 @@ class ListController extends Controller
 
     public function image(Request $request, Post $list)
     {
-        //Només podem pujar imatges d'aquest tipus
-       $request->validate([
-         'image' => 'required|mimes:jpeg,bmp,png|max:10240' //10MB
-        ]);
+      //Només podem pujar imatges d'aquest tipus:
 
-        //Processem l'imatge i posem uns quans segons que han passat de 1970 i 
-        //així garantitzem que les imatges tindran un nom únic
+      $request->validate([
+        'image' => 'required|mimes:jpeg,bmp,png|max:10240' //10Mb
+    ]);
 
-       $filename = time() .".". $request->image->extension();
+     //Processem l'imatge i posem quants segons han pasat de 1970 i 
+     //aixi garantitzem que les imatges tindran un nom unic.
 
-        //A part del path també li hem d'indicar el nom
-        
-       $request->image->move(public_path('images'),$filename);
-        
-       
-       PostImage::create(['image'=>$filename, 'post_id'=>$list->id]);
-       return back()->with('status','Imatge carregada correctament');
-        
+    $filename = time() .".". $request->image->extension();
+
+    //A part del path, també li hem d'indicar el nom 
+    $request->image->move(public_path('images'), $filename);
+     
+   
+    $image = PostImage::create(['image'=> $filename, 'post_id'=> $list->id]);
+
+    ProcessImageSmall::dispatch($image);
+
+    return back()->with('status', 'Imatge carregada correctament');
     }
-    
+
+    public function contentImage(Request $request)
+    {
+       
+    $request->validate([
+        'image' => 'required|mimes:jpeg,bmp,png|max:10240' //10Mb
+    ]);
+
+    $filename = time() . "." . $request->image->extension();
+    $request->image->move(public_path('images_post'), $filename);
+     
+    return response()->json(["default" => URL::to('/') . '/images_post/' .$filename]);
+    } 
+
+    public function imageDownload(PostImage $image)
+    {
+        return Storage::disk('local')->download($image->image);
+    }
+
+    public function imageDelete(PostImage $image)
+    {
+        $image->delete();
+        Storage::disk('local')->delete($image->image);
+        return back()->with('status', 'Imatge Esborrada correctament!');
+
+    }
+  
 }
