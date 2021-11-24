@@ -16,11 +16,8 @@
 
 <script>
     export default {
-       created() {
-           print();
+        mounted() {
+            console.log('Component mounted.')
         }
-    };
-    function print() {
-        console.log('Component created = print');
     }
 </script>

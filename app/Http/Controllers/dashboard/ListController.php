@@ -5,11 +5,16 @@ namespace App\Http\Controllers\dashboard;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\PostImage;
+use App\Exports\ListsExport;
 use Illuminate\Http\Request;
 use App\Jobs\ProcessImageSmall;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreListPost;
+use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CrearList;
 
 class ListController extends Controller
 {
@@ -23,6 +28,16 @@ class ListController extends Controller
     {
        $this->middleware(['auth','rol.admin']);
     }
+
+    public function export(){
+        return Excel::download(new ListsExport, 'lists.xlsx');
+    }
+   
+    public function exportIntoCSV(){
+      return Excel::download(new ListsExport, 'lists.csv');
+    }
+
+
     public function index()
     {
         
@@ -50,12 +65,21 @@ class ListController extends Controller
      */
     public function store(StoreListPost $request)
     {
-        //dd($request->all());
-        Post::create($request->validated());
-        return back()->with('status','Element creat correctament');
-
-
+        $data = $request->all();
+       
+        if($imatges=$request->file('image'))
+        {
+            $nom_imatge = $imatges->getClientOriginalName();
+            $imatges->move('images',$nom_imatge);
+            $data['image']=$nom_imatge;
+        }
+            Post::create($data);
+          
+   
+        return back()->with('status','Element creat correctamente');
+     
     }
+    
 
     /**
      * Display the specified resource.
@@ -77,6 +101,7 @@ class ListController extends Controller
      */
     public function edit(Post $list)
     {
+        $list = Post::findOrFail($list->id);
         $categories = Category::pluck('id','title');
         return view ('dashboard.list.edit',['list'=>$list,'categories' => $categories]);
         
@@ -89,9 +114,29 @@ class ListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreListPost $request, Post $list)
-    {
-        $list->update($request->validated());
+    
+    public function update(StoreListPost $request, $id)
+    { 
+        $post = Post::find($id);
+        $post->title = $request->input('title');
+        $post->url = $request->input('url');
+        $post->content = $request->input('content');
+        $post->category_id = $request->input('category_id');
+        
+
+        if($request->hasfile('image'))
+        {
+            $destination = 'images'.$post->image;
+            if(Post::exists($destination))
+            {
+                File::delete($destination);
+            }
+            $file = $request->file('image');
+            $nom_imatge = $file->getClientOriginalName();
+            $file->move('images',$nom_imatge);
+            $post->image=$nom_imatge;
+        } 
+        $post->update();
         return back()->with('status','Element modificat correctament!');
     }
 
@@ -125,6 +170,7 @@ class ListController extends Controller
      
    
     $image = PostImage::create(['image'=> $filename, 'post_id'=> $list->id]);
+    
 
     ProcessImageSmall::dispatch($image);
 
@@ -139,9 +185,9 @@ class ListController extends Controller
     ]);
 
     $filename = time() . "." . $request->image->extension();
-    $request->image->move(public_path('images_post'), $filename);
+    $request->image->move(public_path('images'), $filename);
      
-    return response()->json(["default" => URL::to('/') . '/images_post/' .$filename]);
+    return response()->json(["default" => URL::to('/') . '/images/' .$filename]);
     } 
 
     public function imageDownload(PostImage $image)

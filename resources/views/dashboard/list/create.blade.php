@@ -2,8 +2,9 @@
 
 @section('content')
     
-
-<form action="{{route("list.store")}}" method="POST">
+@include('dashboard.partials.validations-error')
+<form action="{{route("list.store")}}" method="POST" enctype="multipart/form-data" >
+    @csrf
     @include('dashboard.list._form')
 </form>
 

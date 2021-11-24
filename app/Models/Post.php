@@ -9,16 +9,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
-    protected $fillable = ['title','url','content','category_id'];
+    
+
+    protected $fillable = ['title','url','content','image','category_id'];
 
     public function category()
     {
         return $this->BelongsTo(Category::Class);
     }
     public function image(){
-        return $this->hasOne(PostImage::class);
+        return $this->hasOne(Post::class);
     }
-    public function images(){
-        return $this->hasMany(PostImage::class);
-    }
+    //public function images(){
+    //    return $this->hasMany(PostImage::class);
+   /// /}
 }

@@ -6,6 +6,14 @@
     Crear
 </a>
 
+<a class="btn btn-success mt-3 mb-3" href="{{ route('list.export') }}">
+    Exportar a Excel 
+</a>
+
+<a class="btn btn-success mt-3 mb-3" href="{{ route('list.exportIntoCSV') }}">
+    Exportar mitjançant CSV
+</a>
+
 <table class="table">
     <thead>
         <tr>
@@ -17,6 +25,9 @@
             </td>
             <td>
                 Categoria
+            </td>
+            <td>
+                Imatge
             </td>
             <td>
                 Data Creació
@@ -33,19 +44,22 @@
         @foreach ($lists as $list)
         <tr>
             <td>
-                {{ $list->id }}
+                {{ $list->id}}
             </td>
             <td>
-                {{ $list->title }}
+                {{ $list->title}}
             </td>
             <td>
                 {{ $list->category->title}}
             </td>
             <td>
-                {{ $list->created_at->format('d-m-Y') }}
+                <img src="/images/{{$list->image}}" width="150"/>
             </td>
             <td>
-                {{ $list->updated_at->format('d-m-Y') }}
+                {{ $list->created_at->format('Y-M-d')}}
+            </td>
+            <td>
+                {{ $list->updated_at->format('d-m-y')}}
             </td>
             <td>
                 <a href="{{ route('list.show',$list->id) }}" class="btn btn-primary">Watch More</a>

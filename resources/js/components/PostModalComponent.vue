@@ -9,7 +9,7 @@
         </button>
       </div>
       <div class="modal-body">
-        {{ post.content }}
+        {{post.content}}
       </div>
     </div>
   </div>

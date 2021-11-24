@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\dashboard;
 
+use PDF;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -45,8 +46,16 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryPost $request)
     {
-        Category::create($request->validated());
-        return back()->with('status','Categoria creada correctament');
+        $data = $request->all();
+        if($imatges=$request->file('image'))
+        {
+            $nom_imatge = $imatges->getClientOriginalName();
+            $imatges->move('images',$nom_imatge);
+            $data['image']=$nom_imatge;
+        }
+            Category::create($data);
+          
+       return back()->with('status','Categoria creada correctament');
     }
 
     /**
@@ -78,8 +87,24 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreCategoryPost $request, Category $category)
+    public function update(StoreCategoryPost $request, $id)
     {
+        $category = Category::find($id);
+        $category->title = $request->input('title');
+        $category->url = $request->input('url');        
+
+        if($request->hasfile('image'))
+        {
+            $destination = 'images'.$category->image;
+            if(Category::exists($destination))
+            {
+                File::delete($destination);
+            }
+            $file = $request->file('image');
+            $nom_imatge = $file->getClientOriginalName();
+            $file->move('images',$nom_imatge);
+            $post->image=$nom_imatge;
+        } 
         $category->update($request->validated());
         return back()->with('status','Categoria modificada correctament');
     }
@@ -94,5 +119,15 @@ class CategoryController extends Controller
     {
         $category->delete();
         return back()->with('status','Categoria Esborrada Correctament');
+    }
+
+    public function pdf()
+    {
+        $category = Category::orderBy('created_at','desc')->get();
+
+        $pdf = PDF::loadView('dashboard.category.pdf', ['categories' => $category]);
+        //return $pdf->stream();
+       return $pdf->download('categories.pdf'); //descarregar PDF 
+       //return view('dashboard.category.pdf', ['categories' => $category] ); 
     }
 }

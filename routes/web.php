@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\dashboard\ListController;
+use App\Http\Controllers\dashboard\CategoryController;
+use App\Mail\ContacteMailable;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +35,6 @@ Route::resource('dashboard/category', '\App\Http\Controllers\dashboard\CategoryC
 Route::resource('dashboard/user', '\App\Http\Controllers\dashboard\UserController');
 
 
-
 Route::get('/', '\App\Http\Controllers\web\WebController@index')->name('index');
 Route::get('/categories', '\App\Http\Controllers\web\WebController@index')->name('index');
 
@@ -45,6 +47,16 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //User Information
-Route::get('page/user/profile/', [App\Http\Controllers\HomeController::class, 'userProfile'])->name('user_profile');
+Route::get('/user/profile', [App\Http\Controllers\HomeController::class, 'userProfile'])->name('user_profile');
+
+//Export
+Route::get('/dashboard/excel/post-export', 'dashboard\ListController@export')->name('list.export');
+Route::get('/dashboard/excel/post-exportCSV', 'dashboard\ListController@exportIntoCSV')->name('list.exportIntoCSV');
+
+//pdf
+Route::get('/dashboard/pdf',  'dashboard\CategoryController@pdf')->name('descarregarPDF');
+
+//Contacte
+Route::get('/contact','\App\Http\Controllers\web\WebController@contact');
 
 

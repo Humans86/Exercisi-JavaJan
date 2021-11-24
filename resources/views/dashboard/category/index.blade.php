@@ -5,7 +5,14 @@
 <a class="btn btn-success mt-3 mb-3" href="{{ route('category.create') }}">
     Crear
 </a>
+&nbsp;
+        
+<a class="btn btn-success mt-3 mb-3" href="{{ route('descarregarPDF') }}">
+    Generar PDF
+</a>
 
+
+      
 <table class="table">
     <thead>
         <tr>
@@ -15,7 +22,9 @@
             <td>
                 Titol
             </td>
-            
+            <td>
+                Imatge
+            </td>
             <td>
                 Data Creació
             </td>
@@ -36,7 +45,9 @@
             <td>
                 {{ $category->title }}
             </td>
-            
+            <td>
+                <img src="/images/{{$category->image}}" width="150"/>
+            </td>
             <td>
                 {{ $category->created_at->format('d-m-Y') }}
             </td>

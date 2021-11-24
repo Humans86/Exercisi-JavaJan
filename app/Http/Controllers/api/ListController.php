@@ -17,9 +17,9 @@ class ListController extends ApiResponseController
     public function index()
     {
         $lists = Post::
-        join('post_images','post_images.post_id','=','posts.id')->
+        
         join('categories','categories.id','=','posts.category_id')->
-        select ('posts.*','categories.title as category','post_images.image')->
+        select ('posts.*','categories.title as category')->
         orderBy('posts.created_at','desc')->paginate(5);
         
         return response()->json($lists,200);
@@ -47,13 +47,13 @@ class ListController extends ApiResponseController
     public function category (Category $category)
     {
         $lists = Post::
-        join('post_images', 'post_images.post_id', '=', 'posts.id')->
         join('categories', 'categories.id', '=', 'posts.category_id')->
-        select('posts.*', 'categories.title as category', 'post_images.image')->
+        select('posts.*', 'categories.title as category')->
         orderBy('posts.created_at', 'desc')->
         where('categories.id', $category->id)->paginate(5);
 
         return $this->successResponse(["posts" => $lists, "category" => $category]);
+        return $this->successResponse(["posts" => $category->post()->paginate(10), "category" => $category]);
 
         
     }

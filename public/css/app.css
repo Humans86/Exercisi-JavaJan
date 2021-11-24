@@ -7369,6 +7369,7 @@ button.bg-dark:focus {
 }
 
 .position-sticky {
+  position: -webkit-sticky !important;
   position: sticky !important;
 }
 
@@ -7388,8 +7389,9 @@ button.bg-dark:focus {
   z-index: 1030;
 }
 
-@supports (position: sticky) {
+@supports ((position: -webkit-sticky) or (position: sticky)) {
   .sticky-top {
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
     z-index: 1020;
@@ -10001,7 +10003,4 @@ h3 {
     color: inherit;
     border-color: #dee2e6;
   }
-}
-.bg-dark {
-  background-color: #00838f !important;
 }

@@ -3,7 +3,7 @@
     <div class="card mt-3" v-for="category in categories"  :key="category.id"> 
       <div class="card mt-3">
     <router-link  :to="{name: 'post-category',params:{category_id:category.id}}">
-    <img src= '/images_category/netflix.svg' class="card-img-top mt-3">
+       <img v-bind:src="'/images/' + category.image" width="100" />
         <div class="card-body">
       <h5 class="card-title text-center"> {{ category.title }}  </h5>
         </div>

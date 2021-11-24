@@ -4,23 +4,12 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+
 require('./bootstrap');
-
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 import router from './assets/router.js';
-
-var ClassicEditor = require('@ckeditor/ckeditor5-build-classic');
-
-ClassicEditor
-    .create(document.querySelector('#content'))
-    .then(editor => {
-        console.log(editor);
-    })
-    .catch(error => {
-        console.error(error);
-    });
-
-
-
+window.Vue = require('vue').default;
 
 /**
  * The following block of code may be used to automatically register your
@@ -33,10 +22,7 @@ ClassicEditor
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-//Vue.component('example-component', require('./components / ExampleComponent.vue ').default);
-
-//Vue.component("list-posts", require('./components/PostListComponent.vue').default);
-
+Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -44,15 +30,15 @@ ClassicEditor
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component(
+ Vue.component(
     "post-list-default", require('./components/PostListDefaultComponent.vue').default);
 
-Vue.component(
-    "modal-post",
-    require("./components/PostModalComponent.vue").default
-);
+    Vue.component(
+        "modal-post",
+        require("./components/PostModalComponent.vue").default
+    );
 
 const app = new Vue({
     el: '#app',
-    router
+    router,
 });

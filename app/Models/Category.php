@@ -8,10 +8,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model
 {
-    protected $fillable = ['title', 'url'];
+    protected $fillable = ['title', 'url','image'];
 
     public function post()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function image(){
+        return $this->hasOne(Category::class);
     }
 }

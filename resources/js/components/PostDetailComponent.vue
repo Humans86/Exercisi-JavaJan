@@ -3,13 +3,12 @@
 <div v-if="post">
 <div class="card mt-5"> 
     <div class="card-header">
-      <img :src="'/images/' + post.image.image" class="card-img-top" />
+        <img :src="'/images/' + post.image" class="card-img-top" />
     </div>
     <div class="card-body">
       <h1 class="card-title"> {{ post.title }}  </h1>
       <router-link class="btn btn-success" :to="{name: 'post-category',params:{category_id:post.category_id}}">{{post.category.title}}</router-link> 
-      <p class="card-text"> {{ post.content }}</p>
-   
+      <p class="card-text" v-html="post.content"></p>
     </div>
 </div>
 <modal-post :post="postSelected"></modal-post>

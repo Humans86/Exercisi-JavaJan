@@ -25,12 +25,14 @@
      
         <div class="form-group">
             <label for="content"> Contingut </label>
-            <textarea readonly class="form-control"  id="descripcio" name="content" rows="3" >{{ $list->content}}</textarea>
-
-            @error('content')
-            <small class="text-danger">{{$message}}</small>
-            @enderror
+            <textarea readonly class="form-control"  id="content" name="content" rows="3" value="{{ $list->content}}"></textarea>
         </div>
+
+        <div class="form-group">
+            <label for="content"> Imatge </label>
+            <input readonly class="form-control"  id="image" name="image" rows="3" value= "/images/{{$list->image}}" width="150"
+        </div>
+
       
 
 @endsection

@@ -1,28 +1,36 @@
 @csrf
-
-<div class="form-group">
-   <label for="name"> Nom </label>
-    <input class="form-control" type="text" name="name" id="name" value="{{old('name',$user->name)}}">
-
+<div class="card">
+    <div class="card-header card-header-primary">
+        <h4 class="card-title">
+           Usuari: 
+        </h4>
+    </div>
 </div>
+<div class="card">
+    <div class="card-header card-header-primary">
+        <div class="form-group">
+            <label for="name"> Nom </label>
+            <input class="form-control" type="text" name="name" id="name" value="{{old('name',$user->name)}}">
 
-<div class="form-group">
-    <label for="surname"> Cognom </label>
-     <input class="form-control" type="text" name="surname" id="surname" value="{{old('surname',$user->surname)}}">
+        </div>
 
- </div>
+        <div class="form-group">
+            <label for="surname"> Cognom </label>
+            <input class="form-control" type="text" name="surname" id="surname" value="{{old('surname',$user->surname)}}">
 
- <div class="form-group">
-  <label for="username"> Username </label>
-   <input class="form-control" type="text" name="username" id="username" value="{{old('username',$user->username)}}">
+        </div>
 
-</div>
+        <div class="form-group">
+            <label for="username"> Username </label>
+            <input class="form-control" type="text" name="username" id="username" value="{{old('username',$user->username)}}">
 
-<div class="form-group">
-    <label for="email"> Correu Electrònic </label>
-     <input class="form-control" type="email" name="email" id="email" value="{{old('email',$user->email)}}">
+        </div>
 
-</div>
+        <div class="form-group">
+             <label for="email"> Correu Electrònic </label>
+             <input class="form-control" type="email" name="email" id="email" value="{{old('email',$user->email)}}">
+
+        </div>
 
 @if ($pasw)
  <div class="form-group">
@@ -31,11 +39,10 @@
  </div>
 @endif
 
-
-
 <input type="submit" value="Enviar" class="btn btn-primary">
 
-
+    </div>
+</div>
 
   
 
