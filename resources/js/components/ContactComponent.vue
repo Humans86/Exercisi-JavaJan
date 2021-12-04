@@ -1,60 +1,62 @@
 <template>
 <div class="col-8 offset-2">
-  <div class="card">
-    <div class="class_header">
-      Formulari de Contacte
-    </div>
-    <div class="card_body">
-      <div class="input-group">
-      <div class="input-group-prepend">
-         <span class="input-group-text" id="">Nom</span>
-      </div>
-  <input type="text" class="form-control">
-      </div>
-
-    <div class="input-group mt-3">
-      <div class="input-group-prepend">
-         <span class="input-group-text" id="">Cognom</span>
-      </div>
-  <input type="text" class="form-control">
-      </div>
-
-      <div class="input-group mt-3">
-      <div class="input-group-prepend">
-         <span class="input-group-text" id="">Email</span>
-      </div>
-  <input type="email" class="form-control">
-      </div>
-
-       <div class="input-group mt-3">
-
-  <textarea class="form-control" placeholder="Comentaris"></textarea>
-      </div>
-      <button type="button" class="btn-btn-primary float-right mt-3 btn-lg">Enviar</button>
-    </div>
-    </div>
+  <form @submit.prevent="onSubmit">
+  <div class="form-group">
+    <label>Name</label>
+    <input v-model="form.name" type="text" class="form-control">
   </div>
+   <div class="form-group">
+    <label>Surname</label>
+    <input v-model="form.surname" type="text" class="form-control">
+  </div>
+   <div class="form-group">
+    <label>Email</label>
+    <input v-model="form.email" type="text" class="form-control">
+  </div>
+   <div class="form-group">
+    <label>Content<9/label>
+    <textarea v-model="form.content" class="form-control" rows="4"></textarea>
+  </div>
+  <button type="submit" class="btn-btn-primary">Enviar</button>
+  </form> 
+</div>
 </template>
 <script>
 
 export default {
 
-  created(){
-
- 
-  },
-    methods: {
-         
-   saveContact:function() {
-     return;
-          }
-    },
-    data: function() {
+data(){
         return {
-            postSelected: "",
-            post: ""
+          form:{
+           name:"",
+           surname:" ",
+           email:"",
+           content: " ",
                 
-                };
                 }
+                }     
+      },
+    methods: {
+   onSubmit(){
+          if(!this.formValid) return
+
+           axios
+           .post("/api/contact",{
+              name: this.$v.form.name.$model,
+              surname: this.$v.form.surname.$model,
+              email: this.$v.form.email.$model,
+              message: this.$v.form.content.$model,
+             // phone: this.$v.form.phone.$model
+           }) 
+    },
+    computed:{
+      formValid(){
+        return this.form.name.length > 0 &&
+              this.form.surname.length > 0 &&
+              this.form.email.length > 0 &&
+              this.form.content.length > 0
+      }
+    }
+    }
 };
 </script>

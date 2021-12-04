@@ -9,11 +9,7 @@ use App\Http\Controllers\Controller;
 
 class ListController extends ApiResponseController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  
     public function index()
     {
         $lists = Post::

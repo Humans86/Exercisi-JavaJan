@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -64,9 +65,11 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
+    private $user;
+
     protected function create(array $data)
     {
-        return User::create([
+       $user = User::create([
             'name' => $data['name'],
             'rol_id' => 2,
             'surname' => $data['surname'],
@@ -74,5 +77,16 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $this->user = $user;
+
+        Mail::send('emails.contacte',$data, function($message){
+            $message->to( $this->user->email,  $this->user->name)
+            ->subject('Gràcies per formar part de la família ciclista '. $this->user->name);
+           });
+
+        return $user;
+
+        
     }
 }

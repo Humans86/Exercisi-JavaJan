@@ -11,7 +11,8 @@ class ContacteMailable extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $subject = "Informació CX Gurb 2021";
+    public $subject = "Informació de registre Club Ciclista Gurb 2021";
+    public $contacte = "Aquesta és la informació de la reserva"
 
     /**
      * Create a new message instance.

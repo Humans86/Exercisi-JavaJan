@@ -26,3 +26,5 @@ Route::get('list/{url}/url','\App\Http\Controllers\api\ListController@url');
 
 Route::get('category','\App\Http\Controllers\api\CategoryController@index');
 Route::get('category/all','\App\Http\Controllers\api\CategoryController@all');
+
+Route::post('contact','\App\Http\Controllers\api\ContactController@store');

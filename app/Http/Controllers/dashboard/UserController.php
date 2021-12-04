@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\dashboard;
 
 use App\Models\User;
+use App\Events\UserCreated;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserPost;
@@ -45,7 +46,7 @@ class UserController extends Controller
      */
     public function store(StoreUserPost $request)
     {
-        User::create(
+       $user = User::create(
             [
             'name' => $request['name'],
             'rol_id' => 2,
@@ -55,6 +56,8 @@ class UserController extends Controller
             'password' => Hash::make($request['password']),
             ]
             );
+
+            event(new UserCreated($user));
             return back()->with('status','Usuari creat correctament');
     }
 

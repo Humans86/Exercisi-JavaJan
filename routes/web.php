@@ -33,6 +33,8 @@ Route::post('dashboard/list/content_image', 'dashboard\ListController@contentIma
 
 Route::resource('dashboard/category', '\App\Http\Controllers\dashboard\CategoryController');
 Route::resource('dashboard/user', '\App\Http\Controllers\dashboard\UserController');
+Route::resource('dashboard/contact', '\App\Http\Controllers\dashboard\ContactController')->only(['index','show','destroy']);
+
 
 
 Route::get('/', '\App\Http\Controllers\web\WebController@index')->name('index');

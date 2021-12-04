@@ -56,7 +56,9 @@
   
     <!-- Copyright -->
     <div class="bg-dark2 footer-copyright text-center py-3 text-white"> © {{ date('Y') }} Copyright:
-      <a class="text-white" href="/">Exercisi JavaJan </a>
+      <router-link to="/" class="text-white"> Exercisi JavaJan</router-link>
+      <router-link class="text-white" :to="{name: 'contact' }"><u> Contacte</u></router-link>
+
     </div>
     <!-- Copyright -->
   </footer>

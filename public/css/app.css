@@ -10004,3 +10004,14 @@ h3 {
     border-color: #dee2e6;
   }
 }
+.bg-dark {
+  background-color: cadetblue !important;
+}
+
+.bg-dark2 {
+  background-color: #006972;
+}
+
+.logo_200 {
+  width: 500px;
+}

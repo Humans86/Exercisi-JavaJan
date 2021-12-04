@@ -18,6 +18,9 @@
       <li class="nav-item">
         <a class="nav-link" href="{{route('user.index')}}">Usuaris</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('contact.index')}}">Contactes</a>
+      </li>
       
     </ul>
     <ul class="navbar-nav ml-auto">
