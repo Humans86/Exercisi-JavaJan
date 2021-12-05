@@ -21,14 +21,9 @@ class ContactController extends ApiResponseController
        }
        else
        {
-      dd($validator->validated());
-           $contact = Contact::create($validator->validated());
-
-           $email = new ContactMailable($request->all());
-            Mail::to($contact->email)->send($email);
-           //ContacteMailable::dispatch($contact->email,$contact->name.' '.$contact->surname);*/
-
-           return $this->successResponse("exito");
+          
+           Contact::create($validator->validated());
+           return $this->successResponse("Informació creada correctament");
        }
   
       }

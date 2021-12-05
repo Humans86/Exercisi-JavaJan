@@ -10,9 +10,9 @@ class StoreContactPost extends FormRequest
     public static function myRules(){
         return [
             'name' => 'required|min:2',
-        //    'phone' => 'required|min:14',
             'surname' => 'required|min:2',
             'email' => 'required|email',
+            'phone' => 'required|min:11',
             'message' => 'required',
         ];
     }

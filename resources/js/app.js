@@ -6,9 +6,14 @@
 
 
 require('./bootstrap');
+
 import Vue from 'vue'
-import VueRouter from 'vue-router'
 import router from './assets/router.js';
+import VueMask from 'v-mask';
+
+import Vuelidate from 'vuelidate';
+import VueAWN from "vue-awesome-notifications";
+
 window.Vue = require('vue').default;
 
 /**
@@ -33,10 +38,15 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  Vue.component(
     "post-list-default", require('./components/PostListDefaultComponent.vue').default);
 
+
     Vue.component(
         "modal-post",
         require("./components/PostModalComponent.vue").default
     );
+    
+    Vue.use(Vuelidate);
+    Vue.use(VueMask);
+    Vue.use(VueAWN);
 
 const app = new Vue({
     el: '#app',
